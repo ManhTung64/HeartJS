@@ -1,305 +1,190 @@
-@using Microsoft.AspNetCore.Identity
-@inject SignInManager<IdentityUser> SignInManager
-@inject UserManager<IdentityUser> UserManager
-<!DOCTYPE html>
-<html>
-<head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title></title>
-  <link rel="stylesheet" href="~/css/index/style.css"/>
-  <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="~/css/site.css" />
-    
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css"
-    integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
-
-    <style type="text/css">
-        body {
-    margin: 0;
-    padding: 0;
-    width: 100%;
-}
-
-.bg-head {
-    background-color: pink;
-    height: 15vh;
-}
-
-    .bg-head * {
-        display: flex;
-    }
-
-.has-search .form-control {
-    padding-left: 2.375rem;
-}
-
-.has-search .form-control-feedback {
-    position: absolute;
-    z-index: 2;
-    display: block;
-    width: 2.375rem;
-    height: 2.375rem;
-    line-height: 2.375rem;
-    text-align: center;
-    pointer-events: none;
-    color: #aaa;
-}
-
-.search {
-    width: 90%;
-    margin-bottom: 30px;
-    margin-top: 50px;
-}
-
-.function {
-    margin: 0;
-}
-
-.cart {
-    border: none;
-    background: none;
-}
-
-.bread-crumb a {
-    text-decoration: none;
-    color: black;
-}
-
-.bg-main {
-    background-color: white;
-}
-
-.category {
-    padding-left: 0;
-}
-
-.main {
-    display: flex;
-}
-
-.bg-all {
-    background-color: #F5F5F5;
-}
-
-.carousel-set img {
-    height: 300px;
-}
-.option a {
-    text-decoration: none;
-    font-weight: bold;
-    color: #FF1493;
-    margin-right: 30px;
-    margin-left: 20px;
-}
-.drop-child{
-    display:none;
-}
-
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML>
+<HEAD>
+    <TITLE> Thanh Chuc </TITLE>
+    <meta charset="utf-8">
+    <META NAME="Generator" CONTENT="EditPlus">
+    <META NAME="Author" CONTENT="">
+    <META NAME="Keywords" CONTENT="">
+    <META NAME="Description" CONTENT="">
+    <style>
+        canvas {
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color = "#2e2e2e";
+        }
     </style>
-</head>
+</HEAD>
 
-<body class="bg-all">
-  <header>
-    <div class="bg-head col-lg-12">
-      <div class="pl-5 header-top col-lg-12">
-        <div class="logo pt-3 pl-5 col-lg-2">
-          <img src="~/image/logo.png" height="100" width="100">
-        </div>
-        <div class="col-lg-6 ml-2 search">
-                    <form asp-controller="Customer" asp-action="Search">
-            <div class="input-group">
-              <input type="text" class="form-control" placeholder="Enter book's name" style="width: 500px;" name="keyword">
-              <div class="input-group-append">
-                <button class="px-4 btn btn-secondary" type="submit" >
-                                    <i class="mt-1 fa fa-search">Search</i>
-                </button>
-              </div>
-            </div>
-          </form>
-        </div>
-        <div class="function col-lg-3">
-          <div class="mt-5">
-                        @if (SignInManager.IsSignedIn(User) && User.IsInRole("Customer"))
-{
-                 <div class="pr-2 mr-1" style="width:140px;"><a asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage" class="text-light bg-dark form-control pr-3"><i
-      class="mt-1 fa fa-user pr-3s">My Account</i></a></div>
+<BODY style=" background-color: #000;">
 
-                <form  class="pr-1 mr-5" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })" >
-                    <button  type="submit" class="text-light bg-dark form-control">Logout</button>
-            </form>
-}
-                        else if (User.IsInRole("Administrator"))
-                        {
-                            <div class="pr-2 mr-1" style="width:140px;"><a asp-controller="Customer" asp-action="DashBoard" title="Manage" class="text-light bg-dark form-control pr-3"><i
-      class="mt-1 fa fa-user pr-3s">Manager</i></a></div>
+<canvas id="heart"></canvas>
 
-                            <form  class="pr-1 mr-5" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })" >
-                                <button type = "submit" class="text-light bg-dark form-control">Logout</button>
-                        </form>
-                        }
-                        else if (User.IsInRole("StoreOwner"))
-                        {
-                                <div class="pr-2 mr-1" style="width:140px;"><a asp-controller="Book" asp-action="Index" title="Manage" class="text-light bg-dark form-control pr-3"><i
-      class="mt-1 fa fa-user pr-3s">Manager</i></a></div>
+<script>
+    window.requestAnimationFrame =
+            window.__requestAnimationFrame ||
+            window.requestAnimationFrame ||
+            window.webkitRequestAnimationFrame ||
+            window.mozRequestAnimationFrame ||
+            window.oRequestAnimationFrame ||
+            window.msRequestAnimationFrame ||
+            (function () {
+                return function (callback, element) {
+                    var lastTime = element.__lastTime;
+                    if (lastTime === undefined) {
+                        lastTime = 0;
+                    }
+                    var currTime = Date.now();
+                    var timeToCall = Math.max(1, 33 - (currTime - lastTime));
+                    window.setTimeout(callback, timeToCall);
+                    element.__lastTime = currTime + timeToCall;
+                };
+            })();
+    window.isDevice = (/android|webos|iphone|ipad|ipod|blackberry|iemobile|opera mini/i.test(((navigator.userAgent || navigator.vendor || window.opera)).toLowerCase()));
+    var loaded = false;
+    var init = function () {
+        if (loaded) return;
+        loaded = true;
+        var mobile = window.isDevice;
+        var koef = mobile ? 0.5 : 1;
+        var canvas = document.getElementById('heart');
+        var ctx = canvas.getContext('2d');
+        var width = canvas.width = koef * innerWidth;
+        var height = canvas.height = koef * innerHeight;
+        var rand = Math.random;
+        ctx.fillStyle = "rgba(0,0,0,1)";
+        ctx.fillRect(0, 0, width, height);
 
-                                <form  class="pr-1 mr-5" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })" >
-                                    <button type = "submit" class="text-light bg-dark form-control">Logout</button>
-                            </form>
-                        }
-else
-{
-    <div class="pr-2 mr-5"><a asp-area="Identity" asp-page="/Account/Login" class="text-light bg-dark form-control"><i
-      class="mt-1 fa fa-user pr-3">Login/SignUp</i></a></div>
-}
-                           <div class="dropdown drop-op ml-5">
-                                <a asp-controller="Cart" asp-action="Index" type="button" class="form-control dropdown-toggle" data-toggle="dropdown">
-                                    <i class="mt-1 fa fa-shopping-cart">Cart</i>
-                                </a>
-                                  <div class="dropdown-menu drop-child">
-                                @if (@TempData["MessageNull"] != null)
-                                    {
-                                            <div class="alert alert-danger">@TempData["MessageNull"]</div>
-                                    }
-                                    else{
-                                        for(int i = 0; i< ViewBag.count;i++)
-                                        {
-                                            <a class="dropdown-item" asp-controller="Cart" asp-action="Index">
-                                                <img class="mr-3" src="~/image/@ViewData["Image"+i+""]" width="30" height="30">
-                                                @ViewData["Title"+i+""]
-                                            </a>
-                                        }
-                                    }
-                                  </div>
-                            </div>
-          </div>
-        </div>
-      </div>
-      <div class="bread-crumb pl-5 col-lg-12">
-      </div>
-    </div>
-  </header>
-  <main class="main col-lg-12 pl-5 mt-5">
-    <div class="pl-5 col-lg-2">
-      <div class="bg-main" >
-          <a asp-controller="Customer" asp-action="Index" class="pl-3 mr-5 font-weight-bold col-lg-12" style="text-decoration:none;color:black;">Home</a>
-        <span class="pl-3 font-weight-bold col-lg-12">Genre</span>
-        <div class="col-lg-12 category bread-crumb">
-            @foreach (var category in ViewBag.Categories)
-            {
-                <a asp-controller="Customer" asp-action="CategoryBook" asp-route-id="@category.Id" class="col-lg-12 mr-2">@category.Name</a>
+
+        var heartPosition = function (rad) {
+            //return [Math.sin(rad), Math.cos(rad)];
+            return [Math.pow(Math.sin(rad), 3), -(15 * Math.cos(rad) - 5 * Math.cos(2 * rad) - 2 * Math.cos(3 * rad) - Math.cos(4 * rad))];
+        };
+        var scaleAndTranslate = function (pos, sx, sy, dx, dy) {
+            return [dx + pos[0] * sx, dy + pos[1] * sy];
+        };
+
+        window.addEventListener('resize', function () {
+            width = canvas.width = koef * innerWidth;
+            height = canvas.height = koef * innerHeight;
+            ctx.fillStyle = "rgba(0,0,0,1)";
+            ctx.fillRect(0, 0, width, height);
+        });
+
+        var traceCount = mobile ? 20 : 50;
+        var pointsOrigin = [];
+        var i;
+        var dr = mobile ? 0.3 : 0.1;
+        for (i = 0; i < Math.PI * 2; i += dr) pointsOrigin.push(scaleAndTranslate(heartPosition(i), 210, 13, 0, 0));
+        for (i = 0; i < Math.PI * 2; i += dr) pointsOrigin.push(scaleAndTranslate(heartPosition(i), 150, 9, 0, 0));
+        for (i = 0; i < Math.PI * 2; i += dr) pointsOrigin.push(scaleAndTranslate(heartPosition(i), 90, 5, 0, 0));
+        var heartPointsCount = pointsOrigin.length;
+
+        var targetPoints = [];
+        var pulse = function (kx, ky) {
+            for (i = 0; i < pointsOrigin.length; i++) {
+                targetPoints[i] = [];
+                targetPoints[i][0] = kx * pointsOrigin[i][0] + width / 2;
+                targetPoints[i][1] = ky * pointsOrigin[i][1] + height / 2;
             }
-        </div>
-      </div>
-    </div>
-    <div class=" bg-main col-lg-9 row ml-1 pt-1" >
-      <div class="col-lg-12 banner bg-main">
-        <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
-          <ol class="carousel-indicators">
-            <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
-            <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
-            <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
-          </ol>
-          <div class="carousel-inner carousel-set">
-            <div class="carousel-item active">
-              <img class="d-block w-100"
-                src="https://notionpress.com/new-rewamp/images/store_slider/top_trending_books_banner_mobile1.webp"
-                alt="First slide">
-            </div>
-            <div class="carousel-item">
-              <img class="d-block w-100"
-                src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS62SWVAS-7PH0YUbZwAYHfqhlqcbtqkwIPdU6k05cC7BbfQHOERNCO2ywFhOOnLzmgRA&usqp=CAU"
-                alt="Second slide">
-            </div>
-            <div class="carousel-item">
-              <img class="d-block w-100" src="C:\Users\admin\Downloads\book1.png" alt="Third slide">
-            </div>
-          </div>
-          <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
-            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-            <span class="sr-only">Previous</span>
-          </a>
-          <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
-            <span class="carousel-control-next-icon" aria-hidden="true"></span>
-            <span class="sr-only">Next</span>
-          </a>
-        </div>
-      </div>
-      <div class="option mt-3 pl-3 col-lg-12 pb-4" style="border-bottom: 1px solid gray;">
-          <a class="ml-0" asp-controller="Customer" asp-action="Index">All</a>|
-          <a href="">New</a>|
-          <a href="">Hot</a>|
-                <a asp-controller="Customer" asp-action="SortTitleAsc">Name: A-Z</a>|
-                <a asp-controller="Customer" asp-action="SortTitleDesc">Name: Z-A</a>|
-                <a asp-controller="Customer" asp-action="SortPriceAsc">Price: A-Z</a>|
-                <a asp-controller="Customer" asp-action="SortPriceDesc">Price: Z-A</a>
-      </div>
-      <div class="col-lg-12">
-        <main role="main" class="pb-3">
-                    @RenderBody()
-        </main>
-    </div>
-    </div>
-  </main>
-  <footer class="text-center text-lg-start bg-light text-muted">
-    <section class="d-flex justify-content-center justify-content-lg-between p-4 border-bottom">
-    </section>
-    <section class="">
-        <div class="container text-center text-md-start mt-5">
-            <div class="row mt-3">
-                <div class="col-md-3 col-lg-4 col-xl-3 mx-auto mb-4">
-                    <h6 class="text-uppercase fw-bold mb-4">
-                        <i class="fas fa-gem me-3"></i>FPT Book
-                    </h6>
-                    <p>
-                        Here you can use rows and columns to organize your footer content. Lorem ipsum
-                        dolor sit amet, consectetur adipisicing elit.
-                    </p>
-                </div>
-                <div class="col-md-2 col-lg-2 col-xl-2 mx-auto mb-4">
-                    <h6 class="text-uppercase fw-bold mb-4">Contact</h6>
-                    <p><i class="fas fa-home me-3"></i> Tòa nhà Golden Park, số 2 Phạm Văn Bạch, phường Yên Hòa, quận Cầu Giấy, Hà Nội</p>
-                    <p>
-                        <i class="fas fa-envelope me-3"></i>
-                        tung@gmail.com
-                    </p>
-                    <p><i class="fas fa-phone me-3"></i> 0346.130.312</p>
-                    <p><i class="fas fa-print me-3"></i> + 01 234 567 89</p>
+        };
 
-                </div>
-                <div class="col-md-4 col-lg-3 col-xl-3 mx-auto mb-md-0 mb-4">
-                    <h6 class="text-uppercase fw-bold mb-4">
-                        Contact Social Network
-                    </h6>
-                    <p>
-                        <a href="" class="me-4 text-reset">
-                            <i class="fab fa-facebook-f"></i>
-                        </a>
-                    </p>
-                    <p>
-                        <a href="" class="me-4 text-reset">
-                            <i class="fab fa-twitter"></i>
-                        </a>
-                    </p>
-                    <p>
-                        <a href="" class="me-4 text-reset">
-                            <i class="fab fa-google"></i>
-                    </p>
-                    </a>
-                    <p>
-                        <a href="" class="me-4 text-reset">
-                            <i class="fab fa-github"></i>
-                        </a>
-                    </p>
-                </div>
-            </div>
-        </div>
-    </section>
-</footer>
-  <script src="~/lib/jquery/dist/jquery.min.js"></script>
-    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="~/js/site.js" asp-append-version="true"></script>
-    @RenderSection("Scripts", required: false)
-</body>
+        var e = [];
+        for (i = 0; i < heartPointsCount; i++) {
+            var x = rand() * width;
+            var y = rand() * height;
+            e[i] = {
+                vx: 0,
+                vy: 0,
+                R: 2,
+                speed: rand() + 5,
+                q: ~~(rand() * heartPointsCount),
+                D: 2 * (i % 2) - 1,
+                force: 0.2 * rand() + 0.7,
+                f: "hsla(0," + ~~(40 * rand() + 60) + "%," + ~~(60 * rand() + 20) + "%,.3)",
+                trace: []
+            };
+            for (var k = 0; k < traceCount; k++) e[i].trace[k] = {x: x, y: y};
+        }
 
-</html>
+        var config = {
+            traceK: 0.4,
+            timeDelta: 0.01
+        };
+
+        var time = 0;
+        var textLeft1 = 0;
+        var textLeft2 = -10;
+        var loop = function () {
+            ctx.fillStyle = "red";
+            ctx.font = "48px 楷体";
+            ctx.fillText("I Love You - Thanh Chúc", 460, 120);
+
+            ctx.font = "26px 楷体";
+
+            var mLeft = 50;
+            var mTop = 250;
+
+            ctx.fillStyle = "red";
+
+            var n = -Math.cos(time);
+            pulse((1 + n) * .5, (1 + n) * .5);
+            time += ((Math.sin(time)) < 0 ? 9 : (n > 0.8) ? .2 : 1) * config.timeDelta;
+            ctx.fillStyle = "rgba(0,0,0,.1)";
+            ctx.fillRect(0, 0, width, height);
+            for (i = e.length; i--;) {
+                var u = e[i];
+                var q = targetPoints[u.q];
+                var dx = u.trace[0].x - q[0];
+                var dy = u.trace[0].y - q[1];
+                var length = Math.sqrt(dx * dx + dy * dy);
+                if (10 > length) {
+                    if (0.95 < rand()) {
+                        u.q = ~~(rand() * heartPointsCount);
+                    }
+                    else {
+                        if (0.99 < rand()) {
+                            u.D *= -1;
+                        }
+                        u.q += u.D;
+                        u.q %= heartPointsCount;
+                        if (0 > u.q) {
+                            u.q += heartPointsCount;
+                        }
+                    }
+                }
+                u.vx += -dx / length * u.speed;
+                u.vy += -dy / length * u.speed;
+                u.trace[0].x += u.vx;
+                u.trace[0].y += u.vy;
+                u.vx *= u.force;
+                u.vy *= u.force;
+                for (k = 0; k < u.trace.length - 1;) {
+                    var T = u.trace[k];
+                    var N = u.trace[++k];
+                    N.x -= config.traceK * (N.x - T.x);
+                    N.y -= config.traceK * (N.y - T.y);
+                }
+                ctx.fillStyle = u.f;
+                for (k = 0; k < u.trace.length; k++) {
+                    ctx.fillRect(u.trace[k].x, u.trace[k].y, 1, 1);
+                }
+            }
+            //ctx.fillStyle = "rgba(255,255,255,1)";
+            //for (i = u.trace.length; i--;) ctx.fillRect(targetPoints[i][0], targetPoints[i][1], 2, 2);
+
+            window.requestAnimationFrame(loop, canvas);
+        };
+
+        loop();
+    };
+
+    var s = document.readyState;
+    if (s === 'complete' || s === 'loaded' || s === 'interactive') init();
+    else document.addEventListener('DOMContentLoaded', init, false);
+</script>
+</BODY>
+</HTML>
